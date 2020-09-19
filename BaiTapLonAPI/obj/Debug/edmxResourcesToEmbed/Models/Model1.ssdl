@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLGVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BOMONTRUNGTAM">
+    <Key>
+      <PropertyRef Name="MaBm" />
+    </Key>
+    <Property Name="MaBm" Type="int" Nullable="false" />
+    <Property Name="TenBM" Type="nvarchar" MaxLength="50" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="30" />
+    <Property Name="Fax" Type="int" />
+    <Property Name="SDT" Type="int" />
+    <Property Name="Email" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="GIANGVIEN">
+    <Key>
+      <PropertyRef Name="MaGV" />
+    </Key>
+    <Property Name="MaGV" Type="int" Nullable="false" />
+    <Property Name="MaBM" Type="int" />
+    <Property Name="TenGV" Type="nvarchar" MaxLength="30" />
+    <Property Name="ChucVu" Type="nvarchar" MaxLength="30" />
+    <Property Name="NgaySinh" Type="datetime" />
+    <Property Name="Email" Type="nvarchar" MaxLength="30" />
+    <Property Name="GioiTinh" Type="nvarchar" MaxLength="3" />
+    <Property Name="SDT" Type="int" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="30" />
+    <Property Name="MonHocPhuTrach" Type="nvarchar" MaxLength="30" />
+    <Property Name="TrinhDoHocVan" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="LICHLAMVIEC">
+    <Key>
+      <PropertyRef Name="STT" />
+    </Key>
+    <Property Name="STT" Type="int" Nullable="false" />
+    <Property Name="MaGV" Type="int" />
+    <Property Name="NgayBD" Type="datetime" />
+    <Property Name="NgayKT" Type="datetime" />
+    <Property Name="CongViec" Type="int" />
+    <Property Name="Tuan" Type="int" />
+    <Property Name="Thu" Type="nvarchar" MaxLength="1" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TINTUC">
+    <Key>
+      <PropertyRef Name="MaTT" />
+    </Key>
+    <Property Name="MaTT" Type="int" Nullable="false" />
+    <Property Name="TenTT" Type="nvarchar(max)" />
+    <Property Name="NoiDung" Type="nvarchar(max)" />
+    <Property Name="ThoiGianDang" Type="datetime" />
+    <Property Name="Anh" Type="nvarchar" MaxLength="50" />
+    <Property Name="TacGia" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK__GIANGVIEN__MaBM__59FA5E80">
+    <End Role="BOMONTRUNGTAM" Type="Self.BOMONTRUNGTAM" Multiplicity="0..1" />
+    <End Role="GIANGVIEN" Type="Self.GIANGVIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOMONTRUNGTAM">
+        <PropertyRef Name="MaBm" />
+      </Principal>
+      <Dependent Role="GIANGVIEN">
+        <PropertyRef Name="MaBM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LICHLAMVIE__MaGV__5AEE82B9">
+    <End Role="GIANGVIEN" Type="Self.GIANGVIEN" Multiplicity="0..1" />
+    <End Role="LICHLAMVIEC" Type="Self.LICHLAMVIEC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GIANGVIEN">
+        <PropertyRef Name="MaGV" />
+      </Principal>
+      <Dependent Role="LICHLAMVIEC">
+        <PropertyRef Name="MaGV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLGVModelStoreContainer">
+    <EntitySet Name="BOMONTRUNGTAM" EntityType="Self.BOMONTRUNGTAM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GIANGVIEN" EntityType="Self.GIANGVIEN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LICHLAMVIEC" EntityType="Self.LICHLAMVIEC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TINTUC" EntityType="Self.TINTUC" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__GIANGVIEN__MaBM__59FA5E80" Association="Self.FK__GIANGVIEN__MaBM__59FA5E80">
+      <End Role="BOMONTRUNGTAM" EntitySet="BOMONTRUNGTAM" />
+      <End Role="GIANGVIEN" EntitySet="GIANGVIEN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LICHLAMVIE__MaGV__5AEE82B9" Association="Self.FK__LICHLAMVIE__MaGV__5AEE82B9">
+      <End Role="GIANGVIEN" EntitySet="GIANGVIEN" />
+      <End Role="LICHLAMVIEC" EntitySet="LICHLAMVIEC" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

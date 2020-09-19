@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLGVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BOMONTRUNGTAM">
+    <Key>
+      <PropertyRef Name="MaBm" />
+    </Key>
+    <Property Name="MaBm" Type="Int32" Nullable="false" />
+    <Property Name="TenBM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Fax" Type="Int32" />
+    <Property Name="SDT" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="GIANGVIEN">
+    <Key>
+      <PropertyRef Name="MaGV" />
+    </Key>
+    <Property Name="MaGV" Type="Int32" Nullable="false" />
+    <Property Name="MaBM" Type="Int32" />
+    <Property Name="TenGV" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="ChucVu" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="NgaySinh" Type="DateTime" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="GioiTinh" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="SDT" Type="Int32" />
+    <Property Name="DiaChi" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="MonHocPhuTrach" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="TrinhDoHocVan" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="LICHLAMVIEC">
+    <Key>
+      <PropertyRef Name="STT" />
+    </Key>
+    <Property Name="STT" Type="Int32" Nullable="false" />
+    <Property Name="MaGV" Type="Int32" />
+    <Property Name="NgayBD" Type="DateTime" Precision="3" />
+    <Property Name="NgayKT" Type="DateTime" Precision="3" />
+    <Property Name="CongViec" Type="Int32" />
+    <Property Name="Tuan" Type="Int32" />
+    <Property Name="Thu" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TINTUC">
+    <Key>
+      <PropertyRef Name="MaTT" />
+    </Key>
+    <Property Name="MaTT" Type="Int32" Nullable="false" />
+    <Property Name="TenTT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ThoiGianDang" Type="DateTime" Precision="3" />
+    <Property Name="Anh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TacGia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK__GIANGVIEN__MaBM__59FA5E80">
+    <End Role="BOMONTRUNGTAM" Type="Self.BOMONTRUNGTAM" Multiplicity="0..1" />
+    <End Role="GIANGVIEN" Type="Self.GIANGVIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOMONTRUNGTAM">
+        <PropertyRef Name="MaBm" />
+      </Principal>
+      <Dependent Role="GIANGVIEN">
+        <PropertyRef Name="MaBM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LICHLAMVIE__MaGV__5AEE82B9">
+    <End Role="GIANGVIEN" Type="Self.GIANGVIEN" Multiplicity="0..1" />
+    <End Role="LICHLAMVIEC" Type="Self.LICHLAMVIEC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GIANGVIEN">
+        <PropertyRef Name="MaGV" />
+      </Principal>
+      <Dependent Role="LICHLAMVIEC">
+        <PropertyRef Name="MaGV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLGVEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BOMONTRUNGTAMs" EntityType="Self.BOMONTRUNGTAM" />
+    <EntitySet Name="GIANGVIENs" EntityType="Self.GIANGVIEN" />
+    <EntitySet Name="LICHLAMVIECs" EntityType="Self.LICHLAMVIEC" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TINTUCs" EntityType="Self.TINTUC" />
+    <AssociationSet Name="FK__GIANGVIEN__MaBM__59FA5E80" Association="Self.FK__GIANGVIEN__MaBM__59FA5E80">
+      <End Role="BOMONTRUNGTAM" EntitySet="BOMONTRUNGTAMs" />
+      <End Role="GIANGVIEN" EntitySet="GIANGVIENs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LICHLAMVIE__MaGV__5AEE82B9" Association="Self.FK__LICHLAMVIE__MaGV__5AEE82B9">
+      <End Role="GIANGVIEN" EntitySet="GIANGVIENs" />
+      <End Role="LICHLAMVIEC" EntitySet="LICHLAMVIECs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
